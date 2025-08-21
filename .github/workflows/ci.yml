@@ -1,0 +1,31 @@
+# .github/workflows/ci.yml
+name: Python CI
+
+on:
+  push:
+    branches:
+      - main  # 只在 main 分支推送时触发
+  pull_request:
+    branches:
+      - main  # 也可以在 PR 推送时触发
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest  # 使用 GitHub 提供的 Ubuntu 环境
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2  # 拉取代码
+
+      - name: Set up Python
+        uses: actions/setup-python@v2  # 设置 Python 环境
+        with:
+          python-version: '3.8'  # 使用 Python 3.8
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt  # 安装依赖
+
+      - name: Run tests
+        run: |
+          pytest  # 运行测试
